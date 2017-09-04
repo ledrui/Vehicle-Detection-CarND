@@ -1,7 +1,3 @@
-##Writeup Template
-###You can use this file as a template for your writeup if you want to submit it as a markdown file, but feel free to use some other method and submit a pdf if you prefer.
-
----
 
 **Vehicle Detection Project**
 
@@ -24,12 +20,9 @@ The goals / steps of this project are the following:
 [image7]: ./examples/output_bboxes.png
 [video1]: ./project_video.mp4
 
-## [Rubric](https://review.udacity.com/#!/rubrics/513/view) Points
-###Here I will consider the rubric points individually and describe how I addressed each point in my implementation.  
-
 ---
 
-###Histogram of Oriented Gradients (HOG)
+### 1 Histogram of Oriented Gradients (HOG)
 
 The code for HOG feature extraction can be found on line 50 of `./utils/featureExtraction.py.`
 
@@ -44,7 +37,7 @@ Here is an example using the `YCrCb` color space and HOG parameters of `orientat
 
 ![alt text][image2]
 
-####2. Feature Extraction for Model
+#### 2. Feature Extraction for Model
 
 I tried various combinations of parameters and color spaces before finding the right mix to go with:
 ```
@@ -61,26 +54,27 @@ hog_feat = True
 ```
 Increasing the orientation enhanced the accuarcy of the finally trained classifier, but increased the time required for computation.
 
-####3. Model Training
+#### 3. Model Training
+
 The extracted features where fed to LinearSVC model of sklearn with default setting of square-hinged loss function and l2 normalization. The trained model had accuracy of 99.36% on test dataset. The SVC with rbf kernel performed better with accuracy of 99.79% as compared to the LinearSVC but was very slow in predicting labels and hence was discarded.
 
 The trained model along with the parameters used for training were written to a pickle file to be further used by vehicle detection pipeline.
 
-###Sliding Window Search
+### Sliding Window Search
 
-####1. Sliding Window Search
+#### 1. Sliding Window Search
 
 I used the function `find_cars` in line 103 in `./utils/featureExtraction.py` to extract features using hog sub-sampling and make predictions.  A sample output from the same is shown below.
 
 ![alt text][image3]
 
-####2. Multi-Scale Search
+#### 2. Multi-Scale Search
 
 The multi-scale window approach prevents calculation of feature vectors for the complete image and thus helps in speeding up the process. 
 
 Ultimately I searched on two scales using YCrCb 3-channel HOG features plus spatially binned color and histograms of color in the feature vector, which provided a nice result.  The figure below shows the multiple scales under consideration overlapped on image.
 
-![png](./output_images/output_12_0.png)
+![alt text][image4]
 ---
 
 ### Video Implementation
